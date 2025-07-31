@@ -1,14 +1,17 @@
-#redeploy trigger
 import streamlit as st
 import requests
 import pandas as pd
 import plotly.graph_objects as go
 import os
+from dotenv import load_dotenv
 
-API_KEY = st.secrets.get("OPENWEATHER_API_KEY")
+# Load environment variables from .env locally
+load_dotenv()
+
+API_KEY = os.getenv('OPENWEATHER_API_KEY')
 
 if not API_KEY:
-    st.error("API key not found in Streamlit secrets.")
+    st.error("API key not found. Please set OPENWEATHER_API_KEY in your .env file or environment variables.")
     st.stop()
 
 WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather"
