@@ -4,18 +4,10 @@ import pandas as pd
 import plotly.graph_objects as go
 import os
 
-if "STREAMLIT_SERVER" not in os.environ:
-    # Only import dotenv locally, NOT on Streamlit Clou
-    from dotenv import load_dotenv
-    load_dotenv()
-
-try:
-    API_KEY = st.secrets["OPENWEATHER_API_KEY"]
-except KeyError:
-    API_KEY = os.getenv("OPENWEATHER_API_KEY")
+API_KEY = st.secrets.get("OPENWEATHER_API_KEY")
 
 if not API_KEY:
-    st.error("API key not found. Please set OPENWEATHER_API_KEY as an environment variable or in Streamlit secrets.")
+    st.error("API key not found in Streamlit secrets.")
     st.stop()
 
 WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather"
