@@ -2,9 +2,11 @@ import streamlit as st
 import requests
 import pandas as pd
 import plotly.graph_objects as go
-from dotenv import load_dotenv
-load_dotenv()
 import os
+
+if os.getenv("STREAMLIT_SERVER") is None:
+    from dotenv import load_dotenv
+    load_dotenv()
 
 API_KEY = os.getenv('OPENWEATHER_API_KEY')
 
