@@ -8,14 +8,14 @@ if os.getenv("STREAMLIT_SERVER") is None:
     from dotenv import load_dotenv
     load_dotenv()
 
-API_KEY = os.getenv('OPENWEATHER_API_KEY')
+try:
+    API_KEY = st.secrets['OPENWEATHER_API_KEY']
+except KeyError:
+    API_KEY = os.getenv('OPENWEATHER_API_KEY')
 
 if not API_KEY:
-    try:
-        API_KEY = st.secrets['OPENWEATHER_API_KEY']
-    except KeyError:
-        st.error("API key not found. Please set the OPENWEATHER_API_KEY environment variable or Streamlit secret.")
-        st.stop()
+    st.error("API key not found. Please set the OPENWEATHER_API_KEY environment variable or Streamlit secret.")
+    st.stop()
 
 WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather"
 FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast"
